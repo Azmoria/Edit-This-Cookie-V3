@@ -1,6 +1,7 @@
 EditThisCookie is a Chrome extension made by Francesco Capano
 http://editthiscookie.com/
 
+Modified and maintained by mr.Fani
 
 This file is part of "EditThisCookie".
 
