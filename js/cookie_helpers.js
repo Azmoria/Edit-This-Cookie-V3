@@ -40,7 +40,6 @@ export function Filter() {
   this.setUrl = function (url) {
     filter.url = url;
   };
-
   this.setDomain = function (domain) {
     filter.domain = domain;
   };
@@ -59,17 +58,24 @@ export function Filter() {
 }
 
 export function cookieForCreationFromFullCookie(fullCookie) {
-  var newCookie = {};
-  //If no real url is available use: "https://" : "http://" + domain + path
-  newCookie.url = 'http' + (fullCookie.secure ? 's' : '') + '://' + fullCookie.domain + fullCookie.path;
-  newCookie.name = fullCookie.name;
-  newCookie.value = fullCookie.value;
-  if (!fullCookie.hostOnly) newCookie.domain = fullCookie.domain;
-  newCookie.path = fullCookie.path;
-  newCookie.secure = fullCookie.secure;
-  newCookie.httpOnly = fullCookie.httpOnly;
-  if (!fullCookie.session) newCookie.expirationDate = fullCookie.expirationDate;
-  newCookie.storeId = fullCookie.storeId;
+  if (fullCookie.domain?.startsWith('.')) {
+    fullCookie.domain = fullCookie.domain.substring(1);
+  }
+  const newCookie = {};
+  newCookie.url = `http${fullCookie.secure ? 's' : ''}://${fullCookie.domain}${fullCookie.path}`;
+  newCookie.name = fullCookie.name ?? '';
+  newCookie.value = fullCookie.value ?? '';
+  newCookie.path = fullCookie.path ?? '';
+  newCookie.domain = fullCookie.domain ?? '';
+  newCookie.secure = fullCookie.secure ?? false;
+  newCookie.httpOnly = fullCookie.httpOnly ?? fullCookie.http_only ?? false;
+  newCookie.storeId = fullCookie.storeId ?? fullCookie.store_id ?? null;
+  newCookie.expirationDate = fullCookie.expirationDate ?? fullCookie.expiration_date ?? null;
+  newCookie.sameSite = fullCookie.sameSite ?? fullCookie.same_site ?? null;
+
+  if (!fullCookie.hostOnly) newCookie.domain = null;
+  if (!fullCookie.session) newCookie.expirationDate = null;
+  if (newCookie.sameSite === 'unspecified') newCookie.sameSite = null;
   return newCookie;
 }
 

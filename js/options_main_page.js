@@ -3,7 +3,7 @@ import { getUrlVars } from '/js/utils.js';
 import { storage } from '/js/common-utils.js';
 
 async function start() {
-  const panel = await storage.get('option_panel')
+  const panel = await storage.get('option_panel');
   const urlVars = getUrlVars();
   let element;
   if (panel === 'null' || panel === null || panel === undefined) {

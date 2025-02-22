@@ -308,12 +308,11 @@ async function start() {
     );
 
     try {
-      var cookieArray = $.parseJSON(text);
-      if (Object.prototype.toString.apply(cookieArray) === '[object Object]') cookieArray = [cookieArray];
-      for (var i = 0; i < cookieArray.length; i++) {
+      let importCookies = $.parseJSON(text);
+      if (typeof importCookies === 'object' && !Array.isArray(importCookies)) importCookies = [importCookies];
+      for (const importCookie of importCookies) {
         try {
-          var cJSON = cookieArray[i];
-          var cookie = cookieForCreationFromFullCookie(cJSON);
+          const cookie = cookieForCreationFromFullCookie(importCookie);
           chrome.cookies.set(cookie);
           nCookiesImportedThisTime++;
         } catch (e) {
