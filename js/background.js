@@ -1,6 +1,7 @@
 import { isChristmasPeriod, storage } from './common-utils.js';
 import { deleteCookie, cookieForCreationFromFullCookie, compareCookies } from '/js/cookie_helpers.js';
 import { startData } from './data.js';
+import { filterMatchesCookie } from './utils.js'
 
 async function start() {
   const { data, preferences } = await startData(function () {
